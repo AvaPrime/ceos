@@ -1,1 +1,61 @@
-See attached pyproject.toml
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ceos"
+version = "0.2.1"
+description = "Empirical Epistemic Operating System — event-sourced belief evolution with measurable failure modes"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.11"
+authors = [
+    {name = "Codessa", email = "codessa@example.com"}
+]
+keywords = ["epistemology", "event-sourcing", "causal-inference", "belief-systems", "organizational-intelligence"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "neo4j>=5.20",
+    "pydantic>=2.9",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio",
+    "hypothesis",
+    "ruff",
+    "mypy",
+    "pre-commit",
+]
+
+[project.scripts]
+ceos-replay = "ceos.replay.cli:main"
+ceos-experiment = "ceos.scripts.run_experiment:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ceos"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
